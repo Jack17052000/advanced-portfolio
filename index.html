@@ -6,10 +6,12 @@
   <title>Portafolio Avanzado</title>
   <link rel="stylesheet" href="style/main.css">
   <script defer src="js/app.js"></script>
+  <script defer src="js/animations.js"></script>
 </head>
 <body>
+  <!-- Header -->
   <header>
-    <h1>Mi Portafolio Avanzado</h1>
+    <div class="logo">JRamosDev</div>
     <nav>
       <ul>
         <li><a href="#about">Sobre mí</a></li>
@@ -18,42 +20,76 @@
         <li><a href="#contact">Contacto</a></li>
       </ul>
     </nav>
+    <button id="theme-toggle">🌙</button>
   </header>
 
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-text">
+      <h1>Hola, soy <span>Johan Ramos</span></h1>
+      <p>Desarrollador backend y frontend en formación.  
+      Apasionado por crear soluciones digitales robustas.</p>
+      <a href="#projects" class="btn">Ver proyectos</a>
+    </div>
+    <div class="hero-img">
+      <img src="assets/img/profile.jpg" alt="Foto perfil">
+    </div>
+  </section>
+
+  <!-- About -->
   <section id="about">
     <h2>Sobre mí</h2>
-    <p>Soy un desarrollador en formación apasionado por crear proyectos modernos con HTML, CSS, JavaScript y Python.</p>
+    <p>Soy un desarrollador especializado en Python (FastAPI) y frontend con HTML, CSS y JavaScript.  
+    Me gusta construir interfaces modernas y backends escalables.</p>
   </section>
 
+  <!-- Skills -->
   <section id="skills">
     <h2>Habilidades</h2>
-    <ul>
-      <li>Python & FastAPI</li>
-      <li>HTML5 & CSS3</li>
-      <li>JavaScript</li>
-      <li>Git & GitHub</li>
-    </ul>
+    <div class="skills-container">
+      <div class="skill"><p>Python</p><div class="bar"><span style="width: 85%"></span></div></div>
+      <div class="skill"><p>FastAPI</p><div class="bar"><span style="width: 80%"></span></div></div>
+      <div class="skill"><p>HTML & CSS</p><div class="bar"><span style="width: 90%"></span></div></div>
+      <div class="skill"><p>JavaScript</p><div class="bar"><span style="width: 75%"></span></div></div>
+    </div>
   </section>
 
+  <!-- Projects -->
   <section id="projects">
     <h2>Proyectos</h2>
-    <div class="card">Proyecto 1</div>
-    <div class="card">Proyecto 2</div>
-    <div class="card">Proyecto 3</div>
+    <div class="projects-grid">
+      <div class="card">
+        <h3>📦 Sistema de Inventario</h3>
+        <p>Gestión de almacén con Kardex automático usando Python + Excel.</p>
+        <a href="#" class="btn">Ver en GitHub</a>
+      </div>
+      <div class="card">
+        <h3>🌐 Portafolio Web</h3>
+        <p>Landing page responsiva con HTML, CSS y JavaScript.</p>
+        <a href="#" class="btn">Ver Demo</a>
+      </div>
+      <div class="card">
+        <h3>⚡ API de Nómina</h3>
+        <p>Aplicación backend con FastAPI para gestión de pagos.</p>
+        <a href="#" class="btn">Ver en GitHub</a>
+      </div>
+    </div>
   </section>
 
+  <!-- Contact -->
   <section id="contact">
     <h2>Contacto</h2>
-    <form>
-      <input type="text" placeholder="Nombre" required>
-      <input type="email" placeholder="Correo" required>
-      <textarea placeholder="Mensaje" required></textarea>
-      <button type="submit">Enviar</button>
+    <form id="contact-form">
+      <input type="text" placeholder="Tu nombre" required>
+      <input type="email" placeholder="Tu correo" required>
+      <textarea placeholder="Tu mensaje" required></textarea>
+      <button type="submit" class="btn">Enviar</button>
     </form>
   </section>
 
+  <!-- Footer -->
   <footer>
-    <p>© 2025 Mi Portafolio</p>
+    <p>© 2025 Johan Ramos | Desarrollador Web</p>
   </footer>
 </body>
 </html>
