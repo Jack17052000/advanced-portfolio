@@ -91,5 +91,30 @@
   <footer>
     <p>© 2025 Johan Ramos | Desarrollador Web</p>
   </footer>
+    <div id="msg" style="text-align: center; margin-top: 10px;"></div>
+  <script>
+  const form = document.getElementById('contactForm');
+  const msg = document.getElementById('msg');
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const data = new FormData(form);
+
+    try {
+      const res = await fetch("http://127.0.0.1:8000/contacto/", {
+        method: "POST",
+        body: data
+      });
+
+      const result = await res.json();
+      msg.textContent = result.msg;
+      form.reset();
+    } catch (error) {
+      msg.textContent = "❌ Error al enviar, intenta de nuevo.";
+      console.error(error);
+    }
+  });
+</script>
+
 </body>
 </html>
