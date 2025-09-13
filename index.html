@@ -1,97 +1,261 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portafolio Avanzado</title>
-  <link rel="stylesheet" href="style/main.css">
-  <script defer src="js/app.js"></script>
-</head>
-<body>
-  <!-- Header -->
-  <header>
-    <div class="logo">JRamosDev</div>
-    <nav>
-      <ul>
-        <li><a href="#about">Sobre mí</a></li>
-        <li><a href="#skills">Habilidades</a></li>
-        <li><a href="#projects">Proyectos</a></li>
-        <li><a href="#contact">Contacto</a></li>
-      </ul>
-    </nav>
-    <button id="theme-toggle">🌓</button>
-  </header>
-
-  <!-- Hero -->
-  <section class="hero">
-    <div class="hero-text">
-      <h1>Hola, soy <span>Johan Ramos</span></h1>
-      <p>Desarrollador full-stack.
-      Apasionado por crear soluciones digitales robustas.</p>
-      <a href="#projects" class="btn">Ver proyectos</a>
-    </div>
-    <div class="hero-img">
-      <img src="assets/img/profile.jpg" alt="Foto perfil">
-    </div>
-  </section>
-
-  <!-- About -->
-  <section id="about">
-    <h2>Sobre mí</h2>
-    <p>Soy un desarrollador especializado en Python (FastAPI) y frontend con HTML, CSS y JavaScript.
-    Me gusta construir interfaces modernas y backends escalables.</p>
-  </section>
-
-  <!-- Skills -->
-  <section id="skills">
-    <h2>Habilidades</h2>
-    <div class="skills-container">
-      <div class="skill"><p>Python</p><div class="bar"><span style="width: 85%"></span></div></div>
-      <div class="skill"><p>FastAPI</p><div class="bar"><span style="width: 80%"></span></div></div>
-      <div class="skill"><p>HTML & CSS</p><div class="bar"><span style="width: 90%"></span></div></div>
-      <div class="skill"><p>JavaScript</p><div class="bar"><span style="width: 75%"></span></div></div>
-    </div>
-  </section>
-
-  <!-- Projects -->
-  <section id="projects">
-    <h2>Proyectos</h2>
-    <div class="projects-grid">
-      <div class="card">
-        <h3>Sistema de Inventario</h3>
-        <p>Gestión de almacén con Kardex automático usando Python + Excel.</p>
-        <a href="#" class="btn">Ver en GitHub</a>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Voltia Ingeniería — Soluciones Eléctricas y Automatización</title>
+    <meta name="description" content="Instalaciones eléctricas, mantenimiento industrial, automatización y energías renovables. Cotiza hoy con Voltia Ingeniería." />
+    <meta name="theme-color" content="#0f172a" />
+    <style>
+      :root{
+        --bg:#0b1020; /* fondo oscuro elegante */
+        --panel:#111833; /* tarjetas */
+        --panel-2:#0d142a; /* header y secciones */
+        --text:#e6eaf3; /* texto principal */
+        --muted:#a9b1c7; /* texto secundario */
+        --brand:#60a5fa; /* azul marca */
+        --brand-2:#22d3ee; /* cian acento */
+        --ok:#34d399;
+        --warn:#f59e0b;
+        --danger:#f87171;
+        --radius:18px;
+        --shadow:0 10px 30px rgba(0,0,0,.35);
+        --max:1100px;
+      }
+      *{box-sizing:border-box}
+      html{scroll-behavior:smooth}
+      body{margin:0;font-family:ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial; background:linear-gradient(180deg, var(--bg), #0a0f1e 50%, #090f1c); color:var(--text)}
+      a{color:inherit;text-decoration:none}
+      img{max-width:100%;display:block}
+      .container{width:100%;max-width:var(--max);margin-inline:auto;padding:clamp(16px, 3vw, 28px)}
+      /* Header */
+      header{position:sticky;top:0;z-index:50;background:rgba(13,20,42,.7);backdrop-filter:saturate(150%) blur(10px);border-bottom:1px solid rgba(255,255,255,.06)}
+      .nav{display:flex;align-items:center;gap:16px;justify-content:space-between}
+      .brand{display:flex;align-items:center;gap:12px;font-weight:700;letter-spacing:.3px}
+      .logo{width:36px;height:36px;border-radius:12px;background:conic-gradient(from 120deg, var(--brand), var(--brand-2)); display:grid; place-items:center; box-shadow:var(--shadow)}
+      .logo svg{filter:drop-shadow(0 4px 12px rgba(96,165,250,.5))}
+      nav ul{display:flex;gap:18px;list-style:none;padding:0;margin:0}
+      nav a{color:var(--muted);font-weight:500}
+      nav a:hover{color:var(--text)}
+      .cta{display:inline-flex;align-items:center;gap:10px;background:linear-gradient(90deg, var(--brand), var(--brand-2)); color:#06101b; padding:12px 18px;border-radius:14px;font-weight:700}
+      .cta:hover{filter:brightness(1.05)}
+      /* Hero */
+      .hero{position:relative;overflow:hidden}
+      .hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;align-items:center;gap:28px}
+      .badge{display:inline-flex;align-items:center;gap:10px; background:rgba(34,211,238,.12); color:#bff5ff; border:1px solid rgba(34,211,238,.35); padding:8px 12px; border-radius:999px; font-size:14px}
+      h1{margin:10px 0 14px;font-size:clamp(28px, 4.5vw, 46px);line-height:1.1}
+      .lead{color:var(--muted);font-size:clamp(15px, 2vw, 18px)}
+      .hero-cta{display:flex;gap:12px;margin-top:18px;flex-wrap:wrap}
+      .ghost{border:1px solid rgba(255,255,255,.12);padding:12px 16px;border-radius:14px;color:var(--text)}
+      .panel{background:linear-gradient(180deg, var(--panel), var(--panel-2)); border:1px solid rgba(255,255,255,.06); padding:18px; border-radius:var(--radius); box-shadow:var(--shadow)}
+      .illus{aspect-ratio:4/3; border-radius:var(--radius); background:radial-gradient(1200px 600px at 20% 10%, rgba(96,165,250,.25), transparent 60%), radial-gradient(800px 400px at 90% 90%, rgba(34,211,238,.25), transparent 70%), linear-gradient(160deg, #0b1228, #0a0f21); display:grid; place-items:center}
+      .illus svg{opacity:.9}
+      /* Secciones */
+      section{padding:clamp(40px, 6vw, 80px) 0}
+      .section-title{font-size:clamp(22px, 3.2vw, 32px); margin:0 0 6px}
+      .section-lead{color:var(--muted); margin-bottom:22px}
+      .grid{display:grid; gap:18px}
+      .grid-3{grid-template-columns:repeat(3, 1fr)}
+      .grid-2{grid-template-columns:repeat(2, 1fr)}
+      .card{background:linear-gradient(180deg, var(--panel), var(--panel-2)); border:1px solid rgba(255,255,255,.06); padding:18px; border-radius:var(--radius); box-shadow:var(--shadow)}
+      .card h3{margin:8px 0 6px}
+      .chip{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:999px;color:var(--muted);font-size:13px}
+      .services .card{transition:.2s transform ease}
+      .services .card:hover{transform:translateY(-4px)}
+      /* Contacto */
+      form{display:grid;gap:12px}
+      input, textarea{background:#0a1022;color:var(--text); border:1px solid rgba(255,255,255,.12); padding:12px 14px; border-radius:12px; font:inherit}
+      textarea{min-height:120px;resize:vertical}
+      .btn{cursor:pointer;border:0; background:linear-gradient(90deg, var(--brand), var(--brand-2)); color:#06101b; padding:12px 18px; border-radius:14px; font-weight:800}
+      .btn:disabled{opacity:.6;cursor:not-allowed}
+      /* Footer */
+      footer{padding:28px 0;border-top:1px solid rgba(255,255,255,.06); color:var(--muted)}
+      .fgrid{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:18px;align-items:start}
+      .social a{display:inline-flex;align-items:center;gap:8px;padding:8px 10px;border:1px solid rgba(255,255,255,.1);border-radius:12px}
+      /* WhatsApp floating */
+      .wa{position:fixed;right:18px;bottom:18px;z-index:60}
+      .wa a{display:inline-flex;align-items:center;gap:10px;background:#25D366;color:#062010;padding:12px 16px;border-radius:999px;font-weight:800;box-shadow:var(--shadow)}
+      /* Responsivo */
+      @media (max-width: 900px){
+        .hero .wrap{grid-template-columns:1fr}
+        .grid-3{grid-template-columns:1fr 1fr}
+        .grid-2,.fgrid{grid-template-columns:1fr}
+        nav ul{display:none}
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header -->
+    <header>
+      <div class="container nav">
+        <a href="#" class="brand" aria-label="Voltia Ingeniería">
+          <span class="logo" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M13 2l-9 12h7l-1 8 9-12h-7l1-8z" stroke="#06101b" stroke-width="2" fill="#e5f2ff" />
+            </svg>
+          </span>
+          VOLTIA INGENIERÍA
+        </a>
+        <nav aria-label="Principal">
+          <ul>
+            <li><a href="#servicios">Servicios</a></li>
+            <li><a href="#proyectos">Proyectos</a></li>
+            <li><a href="#contacto">Contacto</a></li>
+          </ul>
+        </nav>
+        <a class="cta" href="#contacto">Cotizar ahora</a>
       </div>
-      <div class="card">
-        <h3>Portafolio Web</h3>
-        <p>Landing page responsiva con HTML, CSS y JavaScript.</p>
-        <a href="#" class="btn">Ver Demo</a>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+      <div class="container wrap">
+        <div>
+          <span class="badge">⚡ Ingeniería eléctrica & automatización</span>
+          <h1>Instalaciones seguras, eficiencia energética y mantenimiento profesional</h1>
+          <p class="lead">Diseñamos, instalamos y mantenemos sistemas eléctricos para obras residenciales, comerciales e industriales. Cumplimos RETIE/RETILAP y entregamos a tiempo.</p>
+          <div class="hero-cta">
+            <a class="cta" href="#contacto">Solicitar cotización</a>
+            <a class="ghost" href="https://wa.me/573001112233" target="_blank" rel="noopener" aria-label="WhatsApp">Contactar por WhatsApp</a>
+          </div>
+          <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap">
+            <span class="chip">✅ RETIE / RETILAP</span>
+            <span class="chip">🕒 Respuesta en 24h</span>
+            <span class="chip">🛡️ Garantía escrita</span>
+          </div>
+        </div>
+        <div class="panel illus" aria-hidden="true">
+          <svg width="280" height="180" viewBox="0 0 640 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="40" y="40" width="560" height="320" rx="18" stroke="#7cc9ff" stroke-opacity=".35" stroke-width="3"/>
+            <rect x="80" y="90" width="220" height="220" rx="14" fill="#0c1530" stroke="#7cc9ff" stroke-opacity=".35"/>
+            <rect x="340" y="90" width="220" height="140" rx="14" fill="#0c1530" stroke="#7cc9ff" stroke-opacity=".35"/>
+            <rect x="340" y="250" width="220" height="60" rx="14" fill="#0c1530" stroke="#7cc9ff" stroke-opacity=".35"/>
+            <path d="M190 60 L190 20" stroke="#22d3ee" stroke-width="6"/>
+            <circle cx="190" cy="18" r="10" fill="#22d3ee"/>
+          </svg>
+        </div>
       </div>
-      <div class="card">
-        <h3>API de Nómina</h3>
-        <p>Aplicación backend con FastAPI para gestión de pagos.</p>
-        <a href="#" class="btn">Ver en GitHub</a>
+    </section>
+
+    <!-- Servicios -->
+    <section id="servicios">
+      <div class="container">
+        <h2 class="section-title">Servicios</h2>
+        <p class="section-lead">Soluciones integrales para tu proyecto, con seguridad, normatividad y eficiencia.</p>
+        <div class="grid grid-3 services">
+          <article class="card">
+            <h3>Instalaciones eléctricas</h3>
+            <p class="muted">Residencial, comercial e industrial. Diseño y ejecución según RETIE.</p>
+          </article>
+          <article class="card">
+            <h3>Mantenimiento & Diagnóstico</h3>
+            <p class="muted">Termografía, balanceo de cargas, tableros, UPS y redes.</p>
+          </article>
+          <article class="card">
+            <h3>Automatización & Control</h3>
+            <p class="muted">PLC, variadores, tableros de control, SCADA básico.</p>
+          </article>
+          <article class="card">
+            <h3>Energía Solar</h3>
+            <p class="muted">Dimensionamiento, instalación y mantenimiento fotovoltaico.</p>
+          </article>
+          <article class="card">
+            <h3>Iluminación & RETILAP</h3>
+            <p class="muted">Diseño lumínico, eficiencia y cumplimiento normativo.</p>
+          </article>
+          <article class="card">
+            <h3>Corrección de factor de potencia</h3>
+            <p class="muted">Bancos de condensadores y optimización energética.</p>
+          </article>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Contact -->
-  <section id="contact">
-    <h2>Contacto</h2>
-    <form id="contact-form">
-      <input type="text" name="nombre" placeholder="Tu nombre" required>
-      <input type="email" name="email" placeholder="Tu correo" required>
-      <input type="text" name="telefono" placeholder="Tu teléfono (opcional)">
-      <textarea name="mensaje" placeholder="Tu mensaje" required></textarea>
-      <button type="submit" class="btn">Enviar</button>
-    </form>
-  </section>
+    <!-- Proyectos -->
+    <section id="proyectos">
+      <div class="container">
+        <h2 class="section-title">Proyectos recientes</h2>
+        <p class="section-lead">Algunos trabajos destacados de instalaciones y mantenimiento.</p>
+        <div class="grid grid-3">
+          <figure class="card" style="aspect-ratio:4/3;display:grid;place-items:end;padding:0;background:linear-gradient(160deg,#0c1631,#0c1838)">
+            <figcaption style="padding:12px 14px">Centro Comercial — Tableros & cableado</figcaption>
+          </figure>
+          <figure class="card" style="aspect-ratio:4/3;display:grid;place-items:end;padding:0;background:linear-gradient(160deg,#0c1631,#0c1838)">
+            <figcaption style="padding:12px 14px">Planta industrial — Automatización</figcaption>
+          </figure>
+          <figure class="card" style="aspect-ratio:4/3;display:grid;place-items:end;padding:0;background:linear-gradient(160deg,#0c1631,#0c1838)">
+            <figcaption style="padding:12px 14px">Edificio — Iluminación LED</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
 
-  <!-- Footer -->
-  <footer>
-    <p>© 2025 Johan Ramos | Desarrollador Web</p>
-  </footer>
-  <div id="msg" style="text-align: center; margin-top: 10px;"></div>
+    <!-- Contacto -->
+    <section id="contacto">
+      <div class="container">
+        <h2 class="section-title">Solicita una cotización</h2>
+        <p class="section-lead">Cuéntanos qué necesitas. Respondemos en menos de 24 horas.</p>
+        <div class="grid grid-2">
+          <form id="contactForm" class="card" aria-label="Formulario de contacto">
+            <input required name="nombre" placeholder="Tu nombre" aria-label="Tu nombre" />
+            <input required type="email" name="email" placeholder="Correo electrónico" aria-label="Correo" />
+            <input name="telefono" placeholder="Teléfono / WhatsApp" aria-label="Teléfono" />
+            <textarea required name="mensaje" placeholder="Describe tu proyecto..." aria-label="Mensaje"></textarea>
+            <button class="btn" type="submit">Enviar</button>
+            <p id="msg" style="margin:6px 2px 0;color:var(--muted)"></p>
+          </form>
+          <aside class="card">
+            <h3>Datos de contacto</h3>
+            <p>📞 <a href="tel:+573001112233">+57 300 111 22 33</a></p>
+            <p>✉️ <a href="mailto:contacto@voltia.com">contacto@voltia.com</a></p>
+            <p>📍 Bogotá, Colombia</p>
+            <hr style="border:0;border-top:1px solid rgba(255,255,255,.08);margin:14px 0">
+            <p style="color:var(--muted);font-size:14px">Al enviar aceptas nuestra política de tratamiento de datos.</p>
+          </aside>
+        </div>
+      </div>
+    </section>
 
-</body>
+    <footer>
+      <div class="container fgrid">
+        <div>
+          <div class="brand"><span class="logo" aria-hidden="true"></span> VOLTIA INGENIERÍA</div>
+          <p style="margin:10px 0 0">© <span id="yr"></span> Voltia Ingeniería. Todos los derechos reservados.</p>
+        </div>
+        <div>
+          <strong>Compañía</strong>
+          <ul style="margin:8px 0 0; padding:0; list-style:none; color:var(--muted)">
+            <li><a href="#servicios">Servicios</a></li>
+            <li><a href="#proyectos">Proyectos</a></li>
+            <li><a href="#contacto">Contacto</a></li>
+          </ul>
+        </div>
+        <div class="social">
+          <strong>Redes</strong>
+          <div style="margin-top:8px;display:flex;gap:10px;flex-wrap:wrap">
+            <a href="https://wa.me/573001112233" target="_blank" rel="noopener">WhatsApp</a>
+            <a href="#" target="_blank" rel="noopener">LinkedIn</a>
+            <a href="#" target="_blank" rel="noopener">Facebook</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- WhatsApp Floating Button -->
+    <div class="wa"><a href="https://wa.me/573001112233" target="_blank" rel="noopener" aria-label="Escríbenos por WhatsApp">WhatsApp</a></div>
+
+    <script>
+      // Año automático en el footer
+      document.getElementById('yr').textContent = new Date().getFullYear();
+      // Envío simulado del formulario (para demo). Luego lo conectaremos a backend.
+      const form = document.getElementById('contactForm');
+      const msg = document.getElementById('msg');
+      form.addEventListener('submit', (e)=>{
+        e.preventDefault();
+        const data = Object.fromEntries(new FormData(form).entries());
+        msg.textContent = '¡Gracias, ' + (data.nombre||'') + '! Hemos recibido tu mensaje.';
+        form.reset();
+      });
+    </script>
+  </body>
 </html>
