@@ -190,6 +190,43 @@
       </div>
     </section>
 
+    <!-- Usuarios -->
+    <section id="usuarios">
+      <div class="container">
+        <h2 class="section-title">Usuarios</h2>
+        <p class="section-lead">Administra usuarios: crear, editar y eliminar.</p>
+        <div class="grid grid-2">
+          <form id="userForm" class="card" aria-label="Crear/editar usuario">
+            <input type="hidden" name="id" id="userId" />
+            <input required name="name" id="userName" placeholder="Nombre" aria-label="Nombre" />
+            <input required type="email" name="email" id="userEmail" placeholder="Correo electrónico" aria-label="Correo" />
+            <input name="role" id="userRole" placeholder="Rol (e.g. user, admin)" aria-label="Rol" />
+            <label class="chip" style="width:max-content">
+              <input type="checkbox" id="userActive" checked style="margin-right:8px"> Activo
+            </label>
+            <div class="hero-cta">
+              <button class="btn" type="submit" id="userSubmit">Guardar</button>
+              <button class="ghost" type="button" id="userCancel" style="display:none">Cancelar</button>
+            </div>
+            <p id="userMsg" style="margin:6px 2px 0;color:var(--muted)"></p>
+          </form>
+          <div class="card">
+            <h3>Lista de usuarios</h3>
+            <div style="overflow:auto">
+              <table id="usersTable" style="width:100%; border-collapse:collapse">
+                <thead>
+                  <tr style="text-align:left;color:var(--muted)">
+                    <th>Nombre</th><th>Email</th><th>Rol</th><th>Activo</th><th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Contacto -->
     <section id="contacto">
       <div class="container">
@@ -256,6 +293,118 @@
         msg.textContent = '¡Gracias, ' + (data.nombre||'') + '! Hemos recibido tu mensaje.';
         form.reset();
       });
+
+      // -------------------- Usuarios UI --------------------
+      const API = 'http://127.0.0.1:8000';
+      const usersTable = document.getElementById('usersTable').querySelector('tbody');
+      const userForm = document.getElementById('userForm');
+      const userMsg = document.getElementById('userMsg');
+      const userId = document.getElementById('userId');
+      const userName = document.getElementById('userName');
+      const userEmail = document.getElementById('userEmail');
+      const userRole = document.getElementById('userRole');
+      const userActive = document.getElementById('userActive');
+      const userCancel = document.getElementById('userCancel');
+
+      function resetUserForm(){
+        userId.value = '';
+        userName.value = '';
+        userEmail.value = '';
+        userRole.value = '';
+        userActive.checked = true;
+        userCancel.style.display = 'none';
+        userMsg.textContent = '';
+      }
+
+      function startEdit(u){
+        userId.value = u.id;
+        userName.value = u.name;
+        userEmail.value = u.email;
+        userRole.value = u.role || '';
+        userActive.checked = !!u.active;
+        userCancel.style.display = 'inline-flex';
+        window.scrollTo({ top: userForm.getBoundingClientRect().top + window.scrollY - 80, behavior: 'smooth' });
+      }
+
+      async function loadUsers(){
+        try {
+          const res = await fetch(`${API}/users/`);
+          const data = await res.json();
+          renderUsers(Array.isArray(data) ? data : []);
+        } catch (e) {
+          console.error('No se pudieron cargar usuarios', e);
+        }
+      }
+
+      function renderUsers(users){
+        usersTable.innerHTML = users.map(u => `
+          <tr>
+            <td>${u.name}</td>
+            <td>${u.email}</td>
+            <td>${u.role || ''}</td>
+            <td>${u.active ? 'Sí' : 'No'}</td>
+            <td style="display:flex;gap:8px;flex-wrap:wrap">
+              <button class="ghost" type="button" data-edit="${u.id}">Editar</button>
+              <button class="ghost" type="button" data-del="${u.id}">Eliminar</button>
+            </td>
+          </tr>
+        `).join('');
+      }
+
+      usersTable.addEventListener('click', async (e)=>{
+        const editId = e.target.getAttribute('data-edit');
+        const delId = e.target.getAttribute('data-del');
+        if(editId){
+          try {
+            const res = await fetch(`${API}/users/${editId}`);
+            const u = await res.json();
+            startEdit(u);
+          } catch(err){ console.error(err); }
+        }
+        if(delId){
+          if(!confirm('¿Eliminar usuario?')) return;
+          try {
+            await fetch(`${API}/users/${delId}`, { method: 'DELETE' });
+            await loadUsers();
+          } catch(err){ console.error(err); }
+        }
+      });
+
+      userCancel.addEventListener('click', resetUserForm);
+
+      userForm.addEventListener('submit', async (e)=>{
+        e.preventDefault();
+        const payload = {
+          name: userName.value.trim(),
+          email: userEmail.value.trim(),
+          role: userRole.value.trim() || 'user',
+          active: !!userActive.checked,
+        };
+        try {
+          if(userId.value){
+            await fetch(`${API}/users/${userId.value}`, {
+              method: 'PUT',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(payload)
+            });
+          } else {
+            await fetch(`${API}/users/`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(payload)
+            });
+          }
+          userMsg.textContent = 'Guardado correctamente';
+          resetUserForm();
+          await loadUsers();
+        } catch(err){
+          console.error(err);
+          userMsg.textContent = 'Error al guardar';
+        }
+      });
+
+      // Cargar en inicio
+      loadUsers();
     </script>
   </body>
 </html>
