@@ -1,13 +1,31 @@
 // Toggle Dark Mode
-document.getElementById("theme-toggle").addEventListener("click", () => {
-  document.body.classList.toggle("dark");
-  document.getElementById("theme-toggle").textContent =
-    document.body.classList.contains("dark") ? "☀️" : "🌙";
-});
+const themeBtn = document.getElementById("theme-toggle");
+if (themeBtn) {
+  themeBtn.addEventListener("click", () => {
+    const dark = document.body.classList.toggle("dark");
+    themeBtn.textContent = dark ? "☀️" : "🌓";
+  });
+}
 
-// Contact form
-document.getElementById("contact-form").addEventListener("submit", function(e) {
-  e.preventDefault();
-  alert("¡Gracias por tu mensaje! Te responderé pronto.");
-  this.reset();
-});
+// Contact form (envía al backend FastAPI)
+const form = document.getElementById("contact-form");
+const msg = document.getElementById("msg");
+if (form) {
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const data = new FormData(form);
+    try {
+      const res = await fetch("http://127.0.0.1:8000/contacto/", {
+        method: "POST",
+        body: data,
+      });
+      const result = await res.json();
+      if (msg) msg.textContent = result.msg || "Mensaje enviado.";
+      form.reset();
+    } catch (error) {
+      if (msg) msg.textContent = "Error al enviar, intenta de nuevo.";
+      console.error(error);
+    }
+  });
+}
+
