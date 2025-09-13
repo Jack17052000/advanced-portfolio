@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Depends, HTTPException, Form
+from fastapi import FastAPI, Depends, HTTPException, Form, status
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from . import models, schemas, database
@@ -31,7 +31,7 @@ def root():
     return {"message": "Inventory System API with Database is running!"}
 
 # Crear producto
-@app.post("/products/", response_model=schemas.ProductResponse)
+@app.post("/products/", response_model=schemas.ProductResponse, status_code=status.HTTP_201_CREATED)
 def create_product(product: schemas.ProductCreate, db: Session = Depends(get_db)):
     db_product = db.query(models.Product).filter(models.Product.name == product.name).first()
     if db_product:
@@ -100,3 +100,4 @@ async def contacto(
     print(f"Nombre: {nombre}, Email: {email}, Teléfono: {telefono}, Mensaje: {mensaje}")
 
     return {"ok": True, "msg": f"¡Gracias {nombre}! Hemos recibido tu mensaje."}
+
